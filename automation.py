@@ -2,8 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
-import time
 import os
+import requests
 
 from dotenv import load_dotenv
 
@@ -28,4 +28,10 @@ login_field.send_keys(LOGIN_LINKEDIN)
 password_field.send_keys(PASSWORD_LINKEDIN)
 button_click.click()
 
+tab_with_img = driver.current_window_handle
+driver.switch_to.window(tab_with_img)
+img_profile_src = driver.find_element(By.XPATH,'//a[@class="ember-view block"]//img').get_attribute('src')
+response = requests.get(img_profile_src)
 
+with open('profile_image.png', 'wb') as f:
+    f.write(response.content)
