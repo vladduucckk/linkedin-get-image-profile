@@ -26,8 +26,13 @@ PASSWORD_LINKEDIN = os.getenv('PASSWORD_LINKEDIN')
 
 url = 'https://www.linkedin.com/login/ru?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin'
 
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+chrome_options.add_argument(
+    "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.3")
+chrome_options.add_argument('--headless')
 service = Service(executable_path=ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome(service=service, options=chrome_options)
 
 driver.get(url)
 logging.info("Відкрито браузер")
